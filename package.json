@@ -1,0 +1,28 @@
+{
+  "name": "backend_financial_data_p_and_acess_controll",
+  "version": "1.0.0",
+  "description": "backend for a finance dashboard system where different users interact with financial records based on their role.",
+  "main": "Server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "type": "module",
+  "keywords": [
+    "express",
+    "backend",
+    "mongodb",
+    "redis"
+  ],
+  "author": "bikash gupta",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.0",
+    "express": "^5.2.1",
+    "mongoose": "^9.3.3",
+    "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14"
+  }
+}
