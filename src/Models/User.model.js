@@ -1,4 +1,6 @@
 import mongoose from "mongoose";
+import bcrypt from "bcrypt"
+import { decrypt } from "dotenv";
 
 const userschema = new mongoose.Schema({
      name :{
@@ -41,4 +43,22 @@ const userschema = new mongoose.Schema({
 
 },{timestamps:true})
 
-export const User = mongoose.model("Users",userschema) 
+
+
+userschema.pre(("save") ,async function(next){
+    try {
+
+        if(!this.isModified("password")) return next();
+        this.password= await bcrypt.hash(this.password,10)
+        next();
+
+    } catch (error) {
+        console.log(`Unable to HASH password`,error)
+    }
+})
+
+userschema.methods.checkPassword = async function(password){
+    return await bcrypt.compare(password,this.password)
+}
+
+export const Users = mongoose.model("Users",userschema) 
