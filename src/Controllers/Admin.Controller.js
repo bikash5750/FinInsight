@@ -1,6 +1,5 @@
 import {UserDataValidator, LoginValidator} from "../Validators/UserData.Validator.js";
 import {  Users } from "../Models/User.model.js";
-import Auth from "../Auth/Auth.middleware.js";
 import GenreateAccessToken from "../utils/GenreateAccessToken.js"
 
 
@@ -44,7 +43,7 @@ const LoginUser = async (req,res)=>{
 
         res.cookie("accesstoken",accesstoken,{
             httpOnly: true,
-            secure: false,
+            secure: true,
         })
         
         console.log(accesstoken);
@@ -116,6 +115,9 @@ const CreateUser = async (req,res)=>{
          res.status(500).json({ message: error.message });
     }
 }
+
+
+
 
 
 export {CreateUser,LoginUser}
