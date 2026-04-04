@@ -2,10 +2,17 @@ import mongoose from "mongoose";
 import { Users } from "../Models/User.model.js";
 
 //role based access(pre populating data)
- async function CreateAdmin(){
+export default async function CreateAdmin(){
     try {
-        await Users.deleteMany({ role: 'admin' })
+        
+        const adminexist = await Users.find({
+         email: { $in: ["gbikash5750@gmail.com", "rohit51@gmail.com"] }
+        });
 
+        if (adminexist.length === 2) {
+            console.log(" Admin already exists");
+             return;
+            }
         await Users.create([
             {
               name: 'bikash gupta',
@@ -27,7 +34,6 @@ import { Users } from "../Models/User.model.js";
         ])
 
         console.log(`Admin created Sucessfully`)
-        process.exit(0);
 
     } catch (error) {
         console.error('Seed failed:', error.message)
@@ -35,4 +41,5 @@ import { Users } from "../Models/User.model.js";
     }
 }
 
-export default CreateAdmin;
+
+CreateAdmin();

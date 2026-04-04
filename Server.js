@@ -9,11 +9,20 @@ import CreateAdmin from "./src/utils/SeedAdmin.js"
 
 
 
+
+
+
 dotenv.config({path:"./.env"});
 const app = express();
 app.use(express.json());
-app.use(cors());
 app.use(cookieParser());
+app.use(cors({
+    origin: "http://localhost:3000", 
+    credentials: true
+}));
+
+
+
 
 
 
@@ -32,7 +41,7 @@ app.get("/env",(req,res)=>{
 const StartServer = async ()=>{
     try {
         await ConnectDB();
-        CreateAdmin();
+        
 
         app.listen(process.env.PORT,(req,res)=>{
             console.log(`Connect to server ${process.env.PORT}`)
