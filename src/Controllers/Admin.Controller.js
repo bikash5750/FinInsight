@@ -249,6 +249,8 @@ const DeleteUser = async (req,res) => {
 }
 
 
+
+
 const UpdateUserDetails = async (req,res)=>{
     try {
          if(req.user.role !== 'admin'){
@@ -307,4 +309,36 @@ const UpdateUserDetails = async (req,res)=>{
     }
 }
 
-export {CreateUser,LoginUser,SetStatusInactive,SetStatusActive,DeleteUser,UpdateUserDetails}
+
+
+
+const GetAllUsers = async (req,res)=>{
+    try {
+
+       if (req.user.role !== "admin" && req.user.role !== "analyst"){
+        return res.status(403).json({message : "you are not Autorized to get all userdetails"})
+       }
+
+        const users = await Users.find(
+            { role: { $in: ["analyst", "viewer"] } }, 
+            "name email status username"             
+        );
+
+         return res.status(200).json({
+            message: "Users fetched successfully",
+            users
+        });
+        
+        
+    } catch (error) {
+        console.log("Error fetching users:", error);
+
+        return res.status(500).json({
+            message: "Server error unable to fetch user"})
+        
+    }
+}
+
+
+
+export {CreateUser,LoginUser,SetStatusInactive,SetStatusActive,DeleteUser,UpdateUserDetails,GetAllUsers}

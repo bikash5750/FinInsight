@@ -3,11 +3,20 @@ import { Users } from "./User.model.js";
 
 const RecordSchema = new mongoose.Schema({
 
-    userid:{
+    createdby:{
         type: mongoose.Schema.Types.ObjectId,
         ref:Users,
         required:true,
         index:true,
+
+    },
+
+    recordid:{
+         type: String,
+         required:true,
+         unique:[true,"RecordID already allocated"],
+         trim:true,
+         index:true,
 
     },
     amount:{
