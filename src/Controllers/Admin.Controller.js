@@ -357,7 +357,7 @@ const GetUserById = async (req,res)=>{
             });
         }
 
-        const user = await Users.findOne({email})
+        const user = await Users.findOne({email}, "-password")
 
         if(!user){
             return res.status(400).json({
