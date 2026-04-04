@@ -1,10 +1,11 @@
 import { Records } from "../Models/Records.model.js";
 import { RecordValidator ,UpdateRecordValidator ,CheakRecordID } from "../Validators/Records.Validator.js";
 
-
 const CreateRecords = async (req,res)=>{
 
     try {
+
+        console.log(`i am in createrecode controller`)
         
         if (req.user.role !== "admin") {
         return res.status(403).json({ message: "Only Admin can create records" });
@@ -38,8 +39,8 @@ const CreateRecords = async (req,res)=>{
           type,
           date,
           category,
+          createdby: req.user.id,
           notes,
-          createdBy: req.user.id,
           isDeleted: false
          });
 
@@ -53,7 +54,7 @@ const CreateRecords = async (req,res)=>{
 
     } catch (error) {
 
-        console.log(`error while creating record`,error)
+        console.log(`error while creating record`,error.message)
         return res.status(500).json({message:"Server Error while creating Records"})
         
     }

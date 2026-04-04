@@ -7,7 +7,6 @@ const RecordSchema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref:Users,
         required:true,
-        index:true,
 
     },
 
@@ -28,7 +27,7 @@ const RecordSchema = new mongoose.Schema({
     type:{
         type:String,
         required:true,
-        enum:["income","expanse"],
+        enum:["income","expense"],
         index: true
 
     },
