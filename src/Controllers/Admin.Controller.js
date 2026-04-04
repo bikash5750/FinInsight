@@ -340,5 +340,47 @@ const GetAllUsers = async (req,res)=>{
 }
 
 
+const GetUserById = async (req,res)=>{
+    try {
 
-export {CreateUser,LoginUser,SetStatusInactive,SetStatusActive,DeleteUser,UpdateUserDetails,GetAllUsers}
+        if(req.user.role !== 'admin' && req.user.role !=="analyst"){
+            return res.status(403).json({
+                message: "You are not Autorized to get User Details"
+            });
+        }
+
+       const { email} = req.body;
+
+        if (!email) {
+            return res.status(400).json({
+                message: "Email is required"
+            });
+        }
+
+        const user = await Users.findOne({email})
+
+        if(!user){
+            return res.status(400).json({
+                message:"No User Found"
+            })
+        }
+
+        return res.status(200).json({
+            message:"User Details",
+            user
+        })
+
+        
+    } catch (error) {
+        console.log(`unable to get user by id`,error.message)
+
+        return res.status(500).json({
+            message:"Server Error Unable to Fetch User"
+        })
+        
+    }
+}
+
+
+
+export {CreateUser,LoginUser,SetStatusInactive,SetStatusActive,DeleteUser,UpdateUserDetails,GetAllUsers, GetUserById}
