@@ -327,4 +327,48 @@ const MostExpensiveCategory = async (req,res)=>{
 
 
 
- export {DashboardSummary , GetCategory , MonthlyTrends,WeekTrends,MostExpensiveCategory,TopCategoriesbycount}
+const FilterbyType = async (req, res) => {
+  try {
+
+    if(req.user.role !== "admin" && req.user.role !== "analyst"){
+            return res.status(403).json({
+                message:"Your are Not Autorized"
+            })
+        }
+
+    const { type } = req.body;
+
+   if (type !== "income" && type !== "expense") {
+     return res.status(400).json({
+      message: "Invalid type or Field Empty"
+     });
+    }
+
+    const data = await Records.find({
+      type,
+      isDeleted: false
+    });
+
+    if (data.length === 0) {
+      return res.status(200).json({
+        message: "No records found",
+        data: []
+      });
+    }
+
+    return res.status(200).json({
+      message: `${type} records`,
+      data
+    });
+
+  } catch (error) {
+    console.log("Error:", error.message);
+    return res.status(500).json({
+      message: "Server Error"
+    });
+  }
+};
+
+
+
+ export {DashboardSummary , GetCategory , MonthlyTrends,WeekTrends,MostExpensiveCategory,TopCategoriesbycount,FilterbyType}
