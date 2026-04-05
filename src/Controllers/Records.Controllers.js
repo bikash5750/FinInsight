@@ -5,7 +5,7 @@ const CreateRecords = async (req,res)=>{
 
     try {
 
-        console.log(`i am in createrecode controller`)
+        //console.log(`i am in createrecode controller`)
         
         if (req.user.role !== "admin") {
         return res.status(403).json({ message: "Only Admin can create records" });
@@ -13,7 +13,7 @@ const CreateRecords = async (req,res)=>{
 
         const { amount, type, date, category, notes ,recordid } = req.body;
 
-        if(!amount || !type || !date || !category || !notes || !recordid){
+        if(amount===undefined || !type || !date || !category || !notes || !recordid){
             return res.status(401).json({message:"Required all Input Field"})
         }
 

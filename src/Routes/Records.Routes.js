@@ -7,10 +7,10 @@ import { CreateRecords ,UpdateRecords ,DeleteRecords ,ViewAllRecords ,GetRecords
 
 const Recordrouter = express.Router();
 
-Recordrouter.post("/createrecord",Auth,CreateRecords);
-Recordrouter.patch("/updaterecords",Auth,UpdateRecords);
-Recordrouter.delete("/deleterecords",Auth,DeleteRecords);
-Recordrouter.get("/viewrecords",Auth,ViewAllRecords);
+Recordrouter.post("/create",Auth,CreateRecords);
+Recordrouter.patch("/update",Auth,UpdateRecords);
+Recordrouter.delete("/delete",Auth,DeleteRecords);
+Recordrouter.get("/viewall",Auth,ViewAllRecords);
 Recordrouter.get("/getrecordbyid",Auth,GetRecordsById)
 
 //console.log(`i am in record route`);

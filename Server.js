@@ -6,6 +6,7 @@ import ConnectDB from "./src/DBConnection/Connection.js";
 import { Adminrouter } from "./src/Routes/Admin.Routes.js";
 import { Authrouter } from "./src/Routes/Auth.Routes.js";
 import { Recordrouter } from "./src/Routes/Records.Routes.js";
+import DashboardRouter from "./src/Routes/DaashBoard.Routes.js";
 
 
 
@@ -25,8 +26,8 @@ app.use(cors({
 
 app.use("/api/auth", Authrouter);
 app.use("/api/admin", Adminrouter);
-app.use("/api/records",Recordrouter)
-
+app.use("/api/records",Recordrouter);
+app.use("/api/dashboard",DashboardRouter);
 
 const StartServer = async ()=>{
     try {
