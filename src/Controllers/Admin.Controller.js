@@ -407,8 +407,7 @@ const LogoutUser = async(req,res)=>{
 
     try {
 
-        req.cookie("accesstoken",null);
-
+        res.clearCookie("accesstoken");
         return res.status(200).json({
             message:"User Logout Succesfull"
         })
@@ -424,4 +423,4 @@ const LogoutUser = async(req,res)=>{
 
 
 
-export {CreateUser,LoginUser,SetStatusInactive,SetStatusActive,DeleteUser,UpdateUserDetails,GetAllUsers, GetUserById}
+export {CreateUser,LoginUser,SetStatusInactive,SetStatusActive,DeleteUser,UpdateUserDetails,GetAllUsers, GetUserById ,LogoutUser}
