@@ -8,8 +8,7 @@ import { Adminrouter } from "./src/Routes/Admin.Routes.js";
 import { Authrouter } from "./src/Routes/Auth.Routes.js";
 import { Recordrouter } from "./src/Routes/Records.Routes.js";
 import DashboardRouter from "./src/Routes/DaashBoard.Routes.js";
-import { promise } from "zod";
-import { connect } from "mongoose";
+import {Ratelimiter} from "./src/utils/RateLimiter.js";
 
 
 
@@ -22,6 +21,7 @@ app.use(cors({
     origin: "http://localhost:3000", 
     credentials: true
 }));
+app.use(Ratelimiter)
 
 
 
@@ -35,9 +35,9 @@ app.use("/api/dashboard",DashboardRouter);
 const StartServer = async ()=>{
     try {
         // await ConnectDB();
-        // await redisclient.connect();
+        // await redisclient.connect(); connecting it parallely using promise
 
-        await promise.call([ConnectDB(),redisclient.connect()])
+        await  Promise.all([ConnectDB(),redisclient.connect()])
         console.log(`connect to redis`)
 
         app.listen(process.env.PORT,(req,res)=>{
