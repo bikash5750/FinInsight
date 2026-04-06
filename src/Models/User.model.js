@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 import bcrypt from "bcrypt"
-import { decrypt } from "dotenv";
+import mongoosePaginate from "mongoose-paginate-v2";
+
 
 const userschema = new mongoose.Schema({
      name :{
@@ -61,4 +62,6 @@ userschema.methods.checkPassword = async function(password){
     return await bcrypt.compare(password,this.password)
 }
 
+
+userschema.plugin(mongoosePaginate)
 export const Users = mongoose.model("Users",userschema) 

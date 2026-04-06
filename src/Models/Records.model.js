@@ -1,5 +1,7 @@
 import mongoose from "mongoose";
 import { Users } from "./User.model.js";
+import mongoosePaginate from "mongoose-paginate-v2";
+
 
 const RecordSchema = new mongoose.Schema({
 
@@ -56,5 +58,6 @@ const RecordSchema = new mongoose.Schema({
 
 },{timestamps:true});
 
+RecordSchema.plugin(mongoosePaginate);
 
 export const Records = mongoose.model("Records",RecordSchema);

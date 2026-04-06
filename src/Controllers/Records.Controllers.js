@@ -1,6 +1,7 @@
 import { Records } from "../Models/Records.model.js";
 import { RecordValidator ,UpdateRecordValidator ,CheakRecordID } from "../Validators/Records.Validator.js";
 
+
 const CreateRecords = async (req,res)=>{
 
     try {
@@ -174,15 +175,36 @@ const ViewAllRecords = async (req,res)=>{
     
        const records = await Records.find({ isDeleted: false });
 
-       if(records.length === 0){
+        if(records.length === 0){
         return res.status(200).json({
             message:"No Records Found"
         })
        }
 
+
+
+       const page = parseInt(req.query.page) || 1
+       const limit = parseInt(req.query.limit) ||5
+
+
+       const result = await Records.paginate(
+        {isDeleted:false},
+        {   page,
+            limit,
+            sort:{createdAt:-1}
+        }
+        
+       )
+
        return res.status(200).json({
         message:"All RECORDS",
-        records
+        page:result.page,
+        limit:result.limit,
+        totalRecords: result.totalDocs,
+        totalPages: result.totalPages,
+        hasNextPage: result.hasNextPage,
+        hasPrevPage: result.hasPrevPage,
+        records: result.docs
        })
 
         
