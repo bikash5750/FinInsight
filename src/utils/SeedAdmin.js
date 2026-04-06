@@ -2,7 +2,8 @@ import mongoose from "mongoose";
 import { Users } from "../Models/User.model.js";
 
 //role based access(pre populating data)
-export default async function CreateAdmin(){
+console.log("Seeding started...")
+async function CreateAdmin(){
     try {
         
         const adminexist = await Users.find({
@@ -42,4 +43,4 @@ export default async function CreateAdmin(){
 }
 
 
-CreateAdmin();
+export default CreateAdmin

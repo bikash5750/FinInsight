@@ -11,7 +11,7 @@ const Ratelimiter = async (req,res,next)=>{
          await redisclient.expire(key, 3600);
         }
 
-        if(count>20){
+        if(count>50){
             return res.status(429).json(
                 {
                     message:"User Limit exceeded"

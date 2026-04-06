@@ -9,6 +9,7 @@ import { Authrouter } from "./src/Routes/Auth.Routes.js";
 import { Recordrouter } from "./src/Routes/Records.Routes.js";
 import DashboardRouter from "./src/Routes/DaashBoard.Routes.js";
 import {Ratelimiter} from "./src/utils/RateLimiter.js";
+import CreateAdmin from "./src/utils/SeedAdmin.js";
 
 
 
@@ -38,6 +39,7 @@ const StartServer = async ()=>{
         // await redisclient.connect(); connecting it parallely using promise
 
         await  Promise.all([ConnectDB(),redisclient.connect()])
+        await CreateAdmin();
         console.log(`connect to redis`)
 
         app.listen(process.env.PORT,(req,res)=>{
