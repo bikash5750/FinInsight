@@ -4,6 +4,7 @@
   "description": "backend for a finance dashboard system where different users interact with financial records based on their role.",
   "main": "Server.js",
   "scripts": {
+    "start": "node Server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "type": "module",
