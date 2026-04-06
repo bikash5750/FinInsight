@@ -7,7 +7,7 @@ export default function GenreateAccessToken(user){
             id:user.id,
             email:user.email,
             role:user.role,
-            status:user.status
+            status:user.status,
         },
         process.env.ACCESS_SECRET,
         {

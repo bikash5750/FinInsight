@@ -2,11 +2,14 @@ import express from "express"
 import dotenv from "dotenv"
 import cors from "cors"
 import cookieParser from "cookie-parser";
+import redisclient from "./src/utils/Redis.js";
 import ConnectDB from "./src/DBConnection/Connection.js";
 import { Adminrouter } from "./src/Routes/Admin.Routes.js";
 import { Authrouter } from "./src/Routes/Auth.Routes.js";
 import { Recordrouter } from "./src/Routes/Records.Routes.js";
 import DashboardRouter from "./src/Routes/DaashBoard.Routes.js";
+import { promise } from "zod";
+import { connect } from "mongoose";
 
 
 
@@ -31,7 +34,11 @@ app.use("/api/dashboard",DashboardRouter);
 
 const StartServer = async ()=>{
     try {
-        await ConnectDB();
+        // await ConnectDB();
+        // await redisclient.connect();
+
+        await promise.call([ConnectDB(),redisclient.connect()])
+        console.log(`connect to redis`)
 
         app.listen(process.env.PORT,(req,res)=>{
             console.log(`Connect to server ${process.env.PORT}`)

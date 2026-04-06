@@ -1,5 +1,6 @@
 import jwt from "jsonwebtoken";
 import { Users } from "../Models/User.model.js";
+import redisclient from "../utils/Redis.js";
 
 const Auth = async function(req,res,next) {
     try {
@@ -19,6 +20,14 @@ const Auth = async function(req,res,next) {
            return res.status(404).json({message:"No User Found"})
         }
 
+        const result = await redisclient.exists(`token:${token}`)
+
+        if (result) {
+            return res.status(401).json({
+              message: "Session expired, please login again"
+            });
+        }
+
         if (user.status !== "active") {
             return res.status(403).json({
                 message: "User is inactive"
@@ -30,6 +39,7 @@ const Auth = async function(req,res,next) {
 
         
     } catch (error) {
+        console.log(`error while auth the user`,error.message)
         return res.status(401).json({ message: "Invalid Access token ot Token Expired" });
     }
     

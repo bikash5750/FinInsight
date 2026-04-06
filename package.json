@@ -24,6 +24,7 @@
     "jsonwebtoken": "^9.0.3",
     "mongoose": "^9.3.3",
     "mongoose-paginate-v2": "^1.9.4",
+    "redis": "^5.11.0",
     "zod": "^4.3.6"
   },
   "devDependencies": {

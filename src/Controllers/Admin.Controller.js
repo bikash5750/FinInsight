@@ -1,6 +1,8 @@
 import {UserDataValidator, LoginValidator ,UpdateUserValidator} from "../Validators/UserData.Validator.js";
 import {  Users } from "../Models/User.model.js";
 import GenreateAccessToken from "../utils/GenreateAccessToken.js"
+import redisclient from "../utils/Redis.js";
+import jwt from "jsonwebtoken"
 
 
 const LoginUser = async (req,res)=>{
@@ -407,7 +409,14 @@ const LogoutUser = async(req,res)=>{
 
     try {
 
-        res.clearCookie("accesstoken");
+        const token = req.cookies.accesstoken;
+        const decode = await  jwt.decode(token);
+        
+        //console.log(decode)
+        await redisclient.set(`token:${token}`,"blocked");
+        await redisclient.expireAt(`token:${token}`,decode.exp)
+
+        // res.clearCookie("accesstoken");
         return res.status(200).json({
             message:"User Logout Succesfull"
         })
